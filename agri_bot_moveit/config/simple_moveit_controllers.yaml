@@ -1,0 +1,71 @@
+controller_list:
+  - name: arm_controller
+    # action_ns: follow_joint_trajectory
+    action_ns:  effort_controllers
+    type: FollowJointTrajectory
+    default: True
+    joints:
+      - shoulder_pan_joint
+      - shoulder_lift_joint
+      - elbow_joint
+      - wrist_1_joint
+      - wrist_2_joint
+      - wrist_3_joint
+    constraints:
+      goal_time: 0.6
+      # # vel_tolerance is 0 for due to the movegroup/follow_joint_trajectory/goal tolerance is empty
+      # stopped_velocity_tolerance: 0
+      shoulder_pan_joint: {trajectory: 0.5, goal: 0.2}
+      shoulder_lift_joint: {trajectory: 0.5, goal: 0.2}
+      elbow_joint: {trajectory: 0.5, goal: 0.2}
+      wrist_1_joint: {trajectory: 0.5, goal: 0.2}
+      wrist_2_joint: {trajectory: 0.5, goal: 0.2}
+      wrist_3_joint: {trajectory: 0.5, goal: 0.2}
+    gains:
+      shoulder_pan_joint:
+        p: 0
+        d: 0
+        i: 0
+        i_clamp: 1
+      shoulder_lift_joint:
+        p: 0
+        d: 0
+        i: 0
+        i_clamp: 1
+      elbow_joint:
+        p: 0
+        d: 0
+        i: 0
+        i_clamp: 1
+      wrist_1_joint:
+        p: 0
+        d: 0
+        i: 0
+        i_clamp: 1
+      wrist_2_joint:
+        p: 0
+        d: 0
+        i: 0
+        i_clamp: 1
+      wrist_3_joint:
+        p: 0
+        d: 0
+        i: 0
+        i_clamp: 1
+  - name: gripper_controller
+    action_ns: follow_joint_trajectory
+    type: FollowJointTrajectory
+    default: True
+    joints:
+      - gripper_finger1_joint
+
+
+# arm_controller:
+#   type: position_controllers/JointTrajectoryController
+#   joints:
+#     - shoulder_pan_joint
+#     - shoulder_lift_joint
+#     - elbow_joint
+#     - wrist_1_joint
+#     - wrist_2_joint
+#     - wrist_3_joint

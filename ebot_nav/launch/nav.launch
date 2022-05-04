@@ -1,0 +1,40 @@
+<launch>
+
+   <master auto="start"/>
+   <arg name="cmd_vel_topic" default="/cmd_vel" />
+  <arg name="odom_topic" default="odom" />
+  <arg name="move_forward_only" default="true"/>
+<!-- Run the map server --> 
+  <!-- <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher">
+    <param name="publish_frequency" type="double" value="50.0" />
+    <param name="tf_prefix" type="string" value="" />
+</node> 
+
+<node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
+    <param name="/use_gui" value="false"/>
+    <rosparam param="/source_list">[/joint_states]</rosparam>
+</node>  -->
+ <!-- Run the map server --> 
+    <node name="map_server" pkg="map_server" type="map_server" args="$(find ebot_gazebo)/map/map.yaml"/>
+
+ <!--- Run AMCL --> 
+  <include file="$(find ebot_nav)/launch/amcl.launch"/>
+
+<!-- 
+   <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
+    <rosparam file="$(find ebot_nav)/config/costmap_common_params.yaml" command="load" ns="global_costmap" /> 
+    <rosparam file="$(find ebot_nav)/config/costmap_common_params.yaml" command="load" ns="local_costmap" />
+    <rosparam file="$(find ebot_nav)/config/local_costmap_params.yaml" command="load" />
+    <rosparam file="$(find ebot_nav)/config/global_costmap_params.yaml" command="load" /> 
+    <rosparam file="$(find ebot_nav)/config/base_local_planner_params.yaml" command="load" />
+    <remap from="cmd_vel" to="$(arg cmd_vel_topic)"/>
+    <remap from="odom" to="$(arg odom_topic)"/>
+ </node> -->
+   <include file="$(find ebot_nav)/launch/movebase.launch">    
+    <arg name="move_forward_only" value="$(arg move_forward_only)"/>
+  </include>
+
+<node name="rviz" pkg="rviz" type="rviz" args="-d $(find ebot_nav)/rviz/nav.rviz"/>
+
+
+</launch> 
